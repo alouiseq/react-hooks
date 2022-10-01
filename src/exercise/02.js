@@ -4,16 +4,20 @@
 import * as React from 'react'
 
 function Greeting() {
-  const initialName = localStorage.getItem('name') || ''
-  const [name, setName] = React.useState(initialName)
+//  const initialName = localStorage.getItem('name') || ''
+//  const [name, setName] = React.useState(initialName)
 
+  // EC1
+  const getInitialName = () => localStorage.getItem('name') || ''
+  const [name, setName] = React.useState(getInitialName())
   React.useEffect(() => {
     localStorage.setItem('name', name)
-  })
+  }, [name])
 
   function handleChange(event) {
     setName(event.target.value)
   }
+
   return (
     <div>
       <form>
