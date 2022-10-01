@@ -7,7 +7,7 @@ function Greeting() {
 //  const initialName = localStorage.getItem('name') || ''
 //  const [name, setName] = React.useState(initialName)
 
-  // EC1
+  // EC1 & EC2
   const getInitialName = () => localStorage.getItem('name') || ''
   const [name, setName] = React.useState(getInitialName())
   React.useEffect(() => {
