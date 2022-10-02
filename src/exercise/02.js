@@ -8,8 +8,17 @@ function Greeting() {
 //  const [name, setName] = React.useState(initialName)
 
   // EC1 & EC2
-  const getInitialName = () => localStorage.getItem('name') || ''
-  const [name, setName] = React.useState(getInitialName())
+  //const getInitialName = () => localStorage.getItem('name') || ''
+ // const [name, setName] = React.useState(getInitialName())
+
+  // EC3
+  const useLocalStorageState = () => {
+    const getInitialName = () => localStorage.getItem('name') || ''
+    const [name, setName] = React.useState(getInitialName())
+    return [name, setName]
+  }
+  const [name, setName] = useLocalStorageState()
+
   React.useEffect(() => {
     localStorage.setItem('name', name)
   }, [name])
