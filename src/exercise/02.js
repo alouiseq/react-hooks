@@ -12,15 +12,23 @@ function Greeting() {
  // const [name, setName] = React.useState(getInitialName())
 
   // EC3
-  const useLocalStorageState = () => {
-    const getInitialName = () => localStorage.getItem('name') || ''
-    const [name, setName] = React.useState(getInitialName())
-    return [name, setName]
+  // const useLocalStorageState = () => {
+  //   const getInitialName = () => localStorage.getItem('name') || ''
+  //   const [name, setName] = React.useState(getInitialName())
+  //   return [name, setName]
+  // }
+
+  // EC4
+  const useLocalStorageState = (key) => {
+    const value = localStorage.getItem(key)
+    const deserialized = value ? JSON.parse(value) : ''
+    const [data, setData] = React.useState(deserialized)
+    return [data, setData]
   }
-  const [name, setName] = useLocalStorageState()
+  const [name, setName] = useLocalStorageState('name')
 
   React.useEffect(() => {
-    localStorage.setItem('name', name)
+    name && localStorage.setItem('name', JSON.stringify(name))
   }, [name])
 
   function handleChange(event) {
