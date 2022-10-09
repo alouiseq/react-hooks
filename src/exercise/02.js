@@ -7,29 +7,44 @@ function Greeting() {
 //  const initialName = localStorage.getItem('name') || ''
 //  const [name, setName] = React.useState(initialName)
 
-  // EC1 & EC2
+  // EC1
   //const getInitialName = () => localStorage.getItem('name') || ''
- // const [name, setName] = React.useState(getInitialName())
+  // const [name, setName] = React.useState(getInitialName)
+  
+  // EC2
+  // const getInitialName = () => localStorage.getItem('name') || ''
+  // const [name, setName] = React.useState(getInitialName)
+  //  React.useEffect(() => {
+  //    localStorage.setItem('name', name)
+  //  }, [name])
+
 
   // EC3
-  // const useLocalStorageState = () => {
-  //   const getInitialName = () => localStorage.getItem('name') || ''
-  //   const [name, setName] = React.useState(getInitialName())
-  //   return [name, setName]
-  // }
+  const useLocalStorageState = key => {
+    const getInitialData = () => localStorage.getItem(key) || ''
+    const [data, setData] = React.useState(getInitialData)
 
-  // EC4
-  const useLocalStorageState = (key) => {
-    const value = localStorage.getItem(key)
-    const deserialized = value ? JSON.parse(value) : ''
-    const [data, setData] = React.useState(deserialized)
+    React.useEffect(() => {
+      localStorage.setItem(key, data)
+    }, [key, data])
+
     return [data, setData]
   }
+
   const [name, setName] = useLocalStorageState('name')
 
-  React.useEffect(() => {
-    name && localStorage.setItem('name', JSON.stringify(name))
-  }, [name])
+  // EC4
+//  const useLocalStorageState = (key) => {
+//    const value = localStorage.getItem(key)
+//    const deserialized = value ? JSON.parse(value) : ''
+//    const [data, setData] = React.useState(deserialized)
+//    return [data, setData]
+//  }
+//  const [name, setName] = useLocalStorageState('name')
+//
+//  React.useEffect(() => {
+//    name && localStorage.setItem('name', JSON.stringify(name))
+//  }, [name])
 
   function handleChange(event) {
     setName(event.target.value)
