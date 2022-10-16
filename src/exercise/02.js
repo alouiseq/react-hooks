@@ -3,7 +3,7 @@
 
 import * as React from 'react'
 
-function Greeting() {
+function Greeting({initial = ''}) {
 //  const initialName = localStorage.getItem('name') || ''
 //  const [name, setName] = React.useState(initialName)
 
@@ -20,31 +20,42 @@ function Greeting() {
 
 
   // EC3
-  const useLocalStorageState = key => {
-    const getInitialData = () => localStorage.getItem(key) || ''
-    const [data, setData] = React.useState(getInitialData)
+//  const useLocalStorageState = key => {
+//    const getInitialData = () => localStorage.getItem(key) || ''
+//    const [data, setData] = React.useState(getInitialData)
+//
+//    React.useEffect(() => {
+//      localStorage.setItem(key, data)
+//    }, [key, data])
+//
+//    return [data, setData]
+//  }
+//
+//  const [name, setName] = useLocalStorageState('name')
+
+  // EC4
+  const useLocalStorageState = (key, initial) => {
+    const [data, setData] = React.useState(() => {
+      const value = localStorage.getItem(key)
+      if (value) return JSON.parse(value)
+      return typeof initial === 'function' ? initial() : initial
+    })
+
+    const prevKeyRef = React.useRef(key)
 
     React.useEffect(() => {
-      localStorage.setItem(key, data)
+      const prevKey = prevKeyRef.current
+      if (prevKey !== key) {
+        localStorage.removeItem(prevKey)
+        prevKeyRef.current = key
+      }
+      localStorage.setItem(key, JSON.stringify(data))
     }, [key, data])
 
     return [data, setData]
   }
 
-  const [name, setName] = useLocalStorageState('name')
-
-  // EC4
-//  const useLocalStorageState = (key) => {
-//    const value = localStorage.getItem(key)
-//    const deserialized = value ? JSON.parse(value) : ''
-//    const [data, setData] = React.useState(deserialized)
-//    return [data, setData]
-//  }
-//  const [name, setName] = useLocalStorageState('name')
-//
-//  React.useEffect(() => {
-//    name && localStorage.setItem('name', JSON.stringify(name))
-//  }, [name])
+  const [name, setName] = useLocalStorageState('sunday', initial)
 
   function handleChange(event) {
     setName(event.target.value)
@@ -62,7 +73,7 @@ function Greeting() {
 }
 
 function App() {
-  return <Greeting />
+  return <Greeting initial={5} />
 }
 
 export default App
