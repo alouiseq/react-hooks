@@ -55,7 +55,7 @@ function Greeting({initial = ''}) {
     return [data, setData]
   }
 
-  const [name, setName] = useLocalStorageState('sunday', initial)
+  const [name, setName] = useLocalStorageState('name', initial)
 
   function handleChange(event) {
     setName(event.target.value)
