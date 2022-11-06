@@ -1,15 +1,11 @@
 // useState: tic tac toe
 // http://localhost:3000/isolated/exercise/04.js
 
-import React, { useState } from 'react'
-
-const loadSquares = () => {
-  const retrievedSquares = window.localStorage.getItem('squares')
-  return JSON.parse(retrievedSquares) || Array(9).fill(null)
-}
+import React from 'react'
+import { useLocalStorageState } from '../utils'
 
 function Board() {
-  const [squares, setSquares] = useState(loadSquares)
+  const [squares, setSquares] = useLocalStorageState('squares', Array(9).fill(null))
 
   function selectSquare(square) {
     if (calculateWinner(squares) || squares[square]) return;
@@ -17,13 +13,11 @@ function Board() {
     const squaresCopy = [...squares]
     squaresCopy[square] = calculateNextValue(squares)
     setSquares(squaresCopy)
-    saveSquares(squaresCopy)
   }
 
   function restart() {
     const newSquares = Array(9).fill(null)
     setSquares(newSquares)
-    saveSquares(newSquares)
   }
 
   function renderSquare(i) {
@@ -67,11 +61,6 @@ function Game() {
       </div>
     </div>
   )
-}
-
-const saveSquares = (squares) => {
-  // save to localStorage
-  window.localStorage.setItem('squares', JSON.stringify(squares))
 }
 
 // eslint-disable-next-line no-unused-vars
