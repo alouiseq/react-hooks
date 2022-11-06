@@ -7,11 +7,16 @@ import { useLocalStorageState } from '../utils'
 function Board() {
   const [squares, setSquares] = useLocalStorageState('squares', Array(9).fill(null))
 
+  const nextValue = calculateNextValue(squares)
+  const winner = calculateWinner(squares)
+  const status = calculateStatus(winner, squares, nextValue)
+
+
   function selectSquare(square) {
-    if (calculateWinner(squares) || squares[square]) return;
+    if (winner || squares[square]) return;
 
     const squaresCopy = [...squares]
-    squaresCopy[square] = calculateNextValue(squares)
+    squaresCopy[square] = nextValue
     setSquares(squaresCopy)
   }
 
@@ -30,7 +35,7 @@ function Board() {
 
   return (
     <div>
-      <div className="status">{calculateStatus(calculateWinner(squares), squares, calculateNextValue(squares))}</div>
+      <div className="status">{status}</div>
       <div className="board-row">
         {renderSquare(0)}
         {renderSquare(1)}
