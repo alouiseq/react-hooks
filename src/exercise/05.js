@@ -4,10 +4,12 @@ import VanillaTilt from 'vanilla-tilt'
 
 function Tilt({children}) {
   const tiltRef = React.useRef();
+  console.log('tiltRef', tiltRef);
 
   // 🐨 add a `React.useEffect` callback here and use VanillaTilt to make your
   // div look fancy.
   React.useEffect(() => {
+    console.log('in useEffect');
     const tiltNode = tiltRef.current
     VanillaTilt.init(tiltNode, {
       max: 25,
