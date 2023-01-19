@@ -1,13 +1,10 @@
 import * as React from 'react'
-// eslint-disable-next-line no-unused-vars
 import VanillaTilt from 'vanilla-tilt'
 
 function Tilt({children}) {
   const tiltRef = React.useRef();
   console.log('tiltRef', tiltRef);
 
-  // 🐨 add a `React.useEffect` callback here and use VanillaTilt to make your
-  // div look fancy.
   React.useEffect(() => {
     console.log('in useEffect');
     const tiltNode = tiltRef.current
@@ -21,9 +18,6 @@ function Tilt({children}) {
     return () => tiltNode.vanillaTilt.destroy();
   }, []);
   
-  // 💰 Don't forget to return a cleanup function. VanillaTilt.init will add an
-  // object to your DOM node to cleanup:
-
   return (
     <div className="tilt-root" ref={tiltRef}>
       <div className="tilt-child">{children}</div>
